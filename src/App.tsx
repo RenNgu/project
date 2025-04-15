@@ -3,6 +3,70 @@ import { Menu, X, ChevronDown, Search, Users, Briefcase, Globe } from 'lucide-re
 import { Toaster, toast } from 'react-hot-toast';
 import { supabase } from './lib/supabase';
 
+// Mock data to simulate database response
+const mockServices = [
+  {
+    id: 1,
+    type: 'offer',
+    description: 'Full-stack developer with 5 years of experience in React, Node.js, and AWS. Specialized in building scalable web applications and e-commerce solutions.',
+    skills: ['Web Development', 'React', 'Node.js', 'AWS'],
+    profiles: {
+      name: 'Alex Chen',
+      gender: 'Male'
+    }
+  },
+  {
+    id: 2,
+    type: 'service',
+    description: 'Looking for an experienced graphic designer to create a brand identity package including logo, business cards, and social media templates.',
+    skills: ['Graphic Design', 'Logo Design', 'Branding'],
+    profiles: {
+      name: 'Sarah Johnson',
+      gender: 'Female'
+    }
+  },
+  {
+    id: 3,
+    type: 'offer',
+    description: 'Digital marketing specialist offering SEO optimization, content strategy, and social media management. Proven track record of increasing organic traffic by 200%.',
+    skills: ['Digital Marketing', 'SEO Optimization', 'Content Writing'],
+    profiles: {
+      name: 'Maria Garcia',
+      gender: 'Female'
+    }
+  },
+  {
+    id: 4,
+    type: 'service',
+    description: 'Need a professional video editor for our YouTube channel. Looking for someone who can create engaging content with motion graphics and sound design.',
+    skills: ['Video Editing', 'Motion Graphics'],
+    profiles: {
+      name: 'James Wilson',
+      gender: 'Male'
+    }
+  },
+  {
+    id: 5,
+    type: 'offer',
+    description: 'Cybersecurity expert specializing in penetration testing and security audits. Certified ethical hacker with experience in financial sector.',
+    skills: ['Cyber Security', 'Penetration Testing'],
+    profiles: {
+      name: 'David Kim',
+      gender: 'Male'
+    }
+  },
+  {
+    id: 6,
+    type: 'offer',
+    description: '3D artist and animator with expertise in Blender and Maya. Created character models and animations for indie game studios.',
+    skills: ['3D Modeling', 'Animation'],
+    profiles: {
+      name: 'Emma Thompson',
+      gender: 'Female'
+    }
+  }
+];
+
 const skills = [
   "Web Development", "Graphic Design", "Digital Marketing", "Content Writing",
   "SEO Optimization", "App Development", "Video Editing", "Cyber Security",
@@ -33,19 +97,12 @@ function App() {
 
   const fetchServices = async () => {
     try {
-      const { data, error } = await supabase
-        .from('services')
-        .select(`
-          *,
-          profiles (
-            name,
-            gender
-          )
-        `)
-        .order('created_at', { ascending: false });
-
-      if (error) throw error;
-      setServices(data || []);
+      // Simulate API call delay
+      setLoading(true);
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Use mock data instead of actual API call
+      setServices(mockServices);
     } catch (error) {
       toast.error('Error fetching services');
       console.error('Error:', error);
