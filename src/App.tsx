@@ -10,6 +10,8 @@ const mockServices = [
     type: 'offer',
     description: 'Full-stack developer with 5 years of experience in React, Node.js, and AWS. Specialized in building scalable web applications and e-commerce solutions.',
     skills: ['Web Development', 'React', 'Node.js', 'AWS'],
+    sector: 'Technology',
+    created_at: '2025-03-15T10:00:00Z',
     profiles: {
       name: 'Alex Chen',
       gender: 'Male'
@@ -20,6 +22,8 @@ const mockServices = [
     type: 'service',
     description: 'Looking for an experienced graphic designer to create a brand identity package including logo, business cards, and social media templates.',
     skills: ['Graphic Design', 'Logo Design', 'Branding'],
+    sector: 'Creative',
+    created_at: '2025-03-14T15:30:00Z',
     profiles: {
       name: 'Sarah Johnson',
       gender: 'Female'
@@ -30,6 +34,8 @@ const mockServices = [
     type: 'offer',
     description: 'Digital marketing specialist offering SEO optimization, content strategy, and social media management. Proven track record of increasing organic traffic by 200%.',
     skills: ['Digital Marketing', 'SEO Optimization', 'Content Writing'],
+    sector: 'Marketing',
+    created_at: '2025-03-13T09:15:00Z',
     profiles: {
       name: 'Maria Garcia',
       gender: 'Female'
@@ -40,6 +46,8 @@ const mockServices = [
     type: 'service',
     description: 'Need a professional video editor for our YouTube channel. Looking for someone who can create engaging content with motion graphics and sound design.',
     skills: ['Video Editing', 'Motion Graphics'],
+    sector: 'Media',
+    created_at: '2025-03-12T14:45:00Z',
     profiles: {
       name: 'James Wilson',
       gender: 'Male'
@@ -50,6 +58,8 @@ const mockServices = [
     type: 'offer',
     description: 'Cybersecurity expert specializing in penetration testing and security audits. Certified ethical hacker with experience in financial sector.',
     skills: ['Cyber Security', 'Penetration Testing'],
+    sector: 'Technology',
+    created_at: '2025-03-11T11:20:00Z',
     profiles: {
       name: 'David Kim',
       gender: 'Male'
@@ -60,6 +70,8 @@ const mockServices = [
     type: 'offer',
     description: '3D artist and animator with expertise in Blender and Maya. Created character models and animations for indie game studios.',
     skills: ['3D Modeling', 'Animation'],
+    sector: 'Creative',
+    created_at: '2025-03-10T16:00:00Z',
     profiles: {
       name: 'Emma Thompson',
       gender: 'Female'
@@ -71,6 +83,11 @@ const skills = [
   "Web Development", "Graphic Design", "Digital Marketing", "Content Writing",
   "SEO Optimization", "App Development", "Video Editing", "Cyber Security",
   "3D Modeling", "Voice Over", "Data Analytics", "Project Management"
+];
+
+const sectors = [
+  "Technology", "Creative", "Marketing", "Media", "Business", "Education",
+  "Healthcare", "Finance", "Legal", "Engineering"
 ];
 
 function App() {
@@ -312,7 +329,7 @@ function App() {
 
         <div className="mb-20">
           {activeTab === 'service' && <ServiceSection onSubmit={handleServiceSubmit} />}
-          {activeTab === 'offer' && <OfferSection onSubmit={handleSkillSubmit} services={services} />}
+          {activeTab === 'offer' && <OfferSection onSubmit={handleSkillSubmit} />}
           {activeTab === 'browse' && <BrowseSection services={services} loading={loading} />}
         </div>
       </div>
@@ -411,7 +428,7 @@ const ServiceSection = ({ onSubmit }) => {
   );
 };
 
-const OfferSection = ({ onSubmit, services }) => {
+const OfferSection = ({ onSubmit }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = {
@@ -427,92 +444,104 @@ const OfferSection = ({ onSubmit, services }) => {
   };
 
   return (
-    <div className="space-y-12">
-      <div className="max-w-2xl mx-auto">
-        <h2 className="text-3xl font-bold mb-8">I Offer Skills</h2>
-        <form className="space-y-6" onSubmit={handleSubmit}>
-          <FormField label="Your Name" name="name" type="text" placeholder="Jane Doe" />
-          <FormField label="Your Email" name="email" type="email" placeholder="jane@example.com" />
-          <FormField label="Your Phone Number" name="phone" type="tel" placeholder="+1 234-567-890" />
-          <FormField 
-            label="Gender" 
-            name="gender"
-            type="select" 
-            options={["Male", "Female", "Other"]} 
-          />
-          <FormField 
-            label="Skill Details" 
-            name="skillDetails"
-            type="textarea" 
-            placeholder="Describe your skills and experience" 
-          />
-          <FormField 
-            label="Skills" 
-            name="skills"
-            type="text" 
-            placeholder="e.g. Web Dev, Graphic Design" 
-          />
-          <button className="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-800 transition">
-            Submit Offer
-          </button>
-        </form>
-      </div>
-
-      <div>
-        <h2 className="text-3xl font-bold mb-8">Available Professionals</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services
-            .filter(service => service.type === 'offer')
-            .map(service => (
-              <SkillCard 
-                key={service.id}
-                name={service.profiles.name}
-                gender={service.profiles.gender}
-                description={service.description}
-                skills={service.skills}
-              />
-            ))}
-        </div>
-      </div>
+    <div className="max-w-2xl mx-auto">
+      <h2 className="text-3xl font-bold mb-8">I Offer Skills</h2>
+      <form className="space-y-6" onSubmit={handleSubmit}>
+        <FormField label="Your Name" name="name" type="text" placeholder="Jane Doe" />
+        <FormField label="Your Email" name="email" type="email" placeholder="jane@example.com" />
+        <FormField label="Your Phone Number" name="phone" type="tel" placeholder="+1 234-567-890" />
+        <FormField 
+          label="Gender" 
+          name="gender"
+          type="select" 
+          options={["Male", "Female", "Other"]} 
+        />
+        <FormField 
+          label="Skill Details" 
+          name="skillDetails"
+          type="textarea" 
+          placeholder="Describe your skills and experience" 
+        />
+        <FormField 
+          label="Skills" 
+          name="skills"
+          type="text" 
+          placeholder="e.g. Web Dev, Graphic Design" 
+        />
+        <button className="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-800 transition">
+          Submit Offer
+        </button>
+      </form>
     </div>
   );
 };
 
 const BrowseSection = ({ services, loading }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [category, setCategory] = useState('');
+  const [listingType, setListingType] = useState('');
+  const [sector, setSector] = useState('');
+  const [sortBy, setSortBy] = useState('newest');
 
   const filteredServices = services.filter(service => {
     const matchesSearch = 
       service.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
       service.skills.some(skill => skill.toLowerCase().includes(searchTerm.toLowerCase()));
-    const matchesCategory = !category || service.skills.includes(category);
-    return matchesSearch && matchesCategory;
+    const matchesType = !listingType || service.type === listingType;
+    const matchesSector = !sector || service.sector === sector;
+    return matchesSearch && matchesType && matchesSector;
+  }).sort((a, b) => {
+    if (sortBy === 'newest') {
+      return new Date(b.created_at) - new Date(a.created_at);
+    } else {
+      return new Date(a.created_at) - new Date(b.created_at);
+    }
   });
 
   return (
     <div>
-      <div className="flex flex-col md:flex-row gap-4 mb-8">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-          <input 
-            type="text" 
-            placeholder="Search listings..." 
-            className="w-full pl-10 pr-4 py-2 border rounded-lg"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
+      <div className="space-y-4 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            <input 
+              type="text" 
+              placeholder="Search listings..." 
+              className="w-full pl-10 pr-4 py-2 border rounded-lg"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+          
+          <select 
+            className="w-full py-2 px-4 border rounded-lg"
+            value={listingType}
+            onChange={(e) => setListingType(e.target.value)}
+          >
+            <option value="">All Types</option>
+            <option value="offer">Skill Offers</option>
+            <option value="service">Service Requests</option>
+          </select>
+
+          <select 
+            className="w-full py-2 px-4 border rounded-lg"
+            value={sector}
+            onChange={(e) => setSector(e.target.value)}
+          >
+            <option value="">All Sectors</option>
+            {sectors.map(s => (
+              <option key={s} value={s}>{s}</option>
+            ))}
+          </select>
+
+          <select 
+            className="w-full py-2 px-4 border rounded-lg"
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+          >
+            <option value="newest">Newest First</option>
+            <option value="oldest">Oldest First</option>
+          </select>
         </div>
-        <select 
-          className="py-2 px-4 border rounded-lg"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-        >
-          <option value="">All Categories</option>
-          {skills.map(skill => (
-            <option key={skill} value={skill}>{skill}</option>
-          ))}
-        </select>
       </div>
 
       {loading ? (
@@ -565,24 +594,6 @@ const FormField = ({ label, type, placeholder, options, name }) => (
         required
       />
     )}
-  </div>
-);
-
-const SkillCard = ({ name, gender, skills, description }) => (
-  <div className="bg-white p-6 rounded-lg shadow-lg border border-gray-100 hover:shadow-xl transition">
-    <h3 className="text-xl font-bold mb-2">{name}</h3>
-    <p className="text-gray-600 mb-2">{gender}</p>
-    <p className="text-gray-800 mb-4">{description}</p>
-    <div className="flex flex-wrap gap-2 mb-4">
-      {skills.map(skill => (
-        <span key={skill} className="bg-gray-100 px-3 py-1 rounded-full text-sm">
-          {skill}
-        </span>
-      ))}
-    </div>
-    <button className="w-full bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition">
-      Connect
-    </button>
   </div>
 );
 
