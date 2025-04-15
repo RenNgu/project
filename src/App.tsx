@@ -67,7 +67,7 @@ function App() {
       const { data: { user } } = await supabase.auth.getUser();
       
       if (!user) {
-        toast.success('Your service request will be posted after admin reviews it');
+        toast.error('Please sign in to submit a service request');
         return;
       }
 
@@ -108,7 +108,7 @@ function App() {
       const { data: { user } } = await supabase.auth.getUser();
       
       if (!user) {
-        toast.success('Your skill offer will be posted after admin reviews it');
+        toast.error('Please sign in to submit a skill offer');
         return;
       }
 
